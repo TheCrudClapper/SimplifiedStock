@@ -1,7 +1,7 @@
-﻿using SimplifiedStock.Services.DTO.Log;
+﻿using SimplifiedStock.Services.DTO.AuditLog;
 
 namespace SimplifiedStock.Services.ServiceContracts;
 public interface ILogService
 {
-    Task<IReadOnlyCollection<StockLogResponse>> GetAllStockLogsAsync(CancellationToken ct = default);
+    Task<LogResponse> GetAllStockLogsAsync(CancellationToken ct = default);
 }

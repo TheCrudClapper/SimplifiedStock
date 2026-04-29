@@ -4,6 +4,6 @@ namespace SimplifiedStock.Services.ServiceContracts;
 
 public interface IStockService
 {
-    Task<IReadOnlyCollection<StockResponse>> GetAllBankStocksAsync(CancellationToken ct = default);
-    Task PostBankStocksAsync(IEnumerable<StockAddRequest> request);
+    Task<StockResponse> GetAllBankStocksAsync(CancellationToken ct = default);
+    Task AddBankStocksAsync(BankStockAddRequest request);
 }

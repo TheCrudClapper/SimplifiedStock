@@ -9,6 +9,6 @@ public class ChaosController : ControllerBase
     [HttpPost]
     public void KillInstance()
     {
-        HttpContext.Abort();
+        Environment.Exit(0);
     }
 }

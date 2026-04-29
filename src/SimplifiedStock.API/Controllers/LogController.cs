@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimplifiedStock.Services.DTO.Log;
+using SimplifiedStock.Services.DTO.AuditLog;
 using SimplifiedStock.Services.ServiceContracts;
 
 namespace SimplifiedStock.API.Controllers;
@@ -13,7 +13,7 @@ public class LogController : ControllerBase
       => _logService = logService;
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<StockLogResponse>>> GetAllLogs(CancellationToken ct)
+    public async Task<ActionResult<StockLogDto>> GetAllLogs(CancellationToken ct)
     {
         var logs = await _logService.GetAllStockLogsAsync(ct);
         return Ok(logs);

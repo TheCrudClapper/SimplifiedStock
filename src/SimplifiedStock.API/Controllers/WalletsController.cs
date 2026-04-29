@@ -13,9 +13,13 @@ public class WalletsController : ControllerBase
         => _walletService = walletService;
 
     [HttpGet("{wallet_id:guid}")]
-    public async Task<ActionResult<WalletResponse>> GetWalletById(Guid wallet_id, CancellationToken ct)
+    public async Task<ActionResult<WalletResponse?>> GetWalletById(Guid wallet_id, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var wallet = await _walletService.GetWalletByIdAsync(wallet_id, ct);
+        if (wallet is null)
+            return NotFound();
+
+        return Ok(wallet);
     }
 
     [HttpGet("{wallet_id:guid}/stocks/{stock_name:alpha}")]

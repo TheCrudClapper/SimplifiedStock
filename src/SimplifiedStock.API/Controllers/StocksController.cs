@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimplifiedStock.Services.DTO.Stock;
 using SimplifiedStock.Services.ServiceContracts;
 
@@ -16,9 +15,15 @@ public class StocksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostStocks(IEnumerable<StockAddRequest> request)
+    public async Task<ActionResult> PostStocks(BankStockAddRequest request)
     {
-        await _stockService.PostBankStocksAsync(request);
+        await _stockService.AddBankStocksAsync(request);
         return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<StockResponse>> GetBankStocks(CancellationToken ct)
+    {
+        return Ok(await _stockService.GetAllBankStocksAsync(ct));
     }
 }
