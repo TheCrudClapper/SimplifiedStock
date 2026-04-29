@@ -15,4 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimplifiedStock.Infrastructure\SimplifiedStock.Infrastructure.csproj" />
+    <ProjectReference Include="..\SimplifiedStock.Services\SimplifiedStock.Services.csproj" />
+  </ItemGroup>
+
 </Project>

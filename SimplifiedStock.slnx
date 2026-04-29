@@ -1,4 +1,8 @@
 <Solution>
-  <Project Path="src/SimplifiedStock.API/SimplifiedStock.API.csproj" Id="ad4d473b-5c8c-4248-a0c7-80afa37d4329" />
-  <Project Path="src/SimplifiedStock.Services/SimplifiedStock.Services.csproj" Id="9b69ad49-6db5-45aa-823b-45036d6b3c1b" />
+  <Folder Name="/src/">
+    <Project Path="src/SimplifiedStock.API/SimplifiedStock.API.csproj" Id="ad4d473b-5c8c-4248-a0c7-80afa37d4329" />
+    <Project Path="src/SimplifiedStock.Domain/SimplifiedStock.Domain.csproj" Id="67b0a448-ce58-4899-989e-b9bc4b7519a8" />
+    <Project Path="src/SimplifiedStock.Infrastructure/SimplifiedStock.Infrastructure.csproj" Id="5a9b3a7e-cdc4-4dff-85f6-5989886c7a5d" />
+    <Project Path="src/SimplifiedStock.Services/SimplifiedStock.Services.csproj" Id="9b69ad49-6db5-45aa-823b-45036d6b3c1b" />
+  </Folder>
 </Solution>

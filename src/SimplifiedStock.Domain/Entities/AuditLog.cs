@@ -1,6 +1,6 @@
-﻿using SimplifiedStock.Services.Entities.Enums;
+﻿using SimplifiedStock.Domain.Entities.Enums;
 
-namespace SimplifiedStock.Services.Entities;
+namespace SimplifiedStock.Domain.Entities;
 
 public class AuditLog
 {
