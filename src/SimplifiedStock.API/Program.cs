@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using SimplifiedStock.API.Middleware;
+using SimplifiedStock.Infrastructure.Contexts;
 using SimplifiedStock.Infrastructure.Extensions;
 using SimplifiedStock.Services.Extensions;
 using System.Text.Json;
@@ -20,13 +22,17 @@ var app = builder.Build();
 //Global exception middleware
 app.UseGlobalExceptionHandlingMiddleware();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//Automigrate database
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var db = scope.ServiceProvider.GetRequiredService<StockDatabaseContext>();
+    db.Database.Migrate();
 }
+
+app.MapOpenApi();
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
