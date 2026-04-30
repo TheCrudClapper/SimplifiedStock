@@ -14,4 +14,14 @@ public static class OperationTypeEnumMappings
             _ => throw new ArgumentOutOfRangeException(nameof(dto)),
         };
     }
+
+    public static OperationTypeDto ToDto(this OperationType domain)
+    {
+        return domain switch
+        {
+            OperationType.Buy => OperationTypeDto.Buy,
+            OperationType.Sell => OperationTypeDto.Sell,
+            _ => throw new ArgumentOutOfRangeException(nameof(domain)),
+        };
+    }
 }

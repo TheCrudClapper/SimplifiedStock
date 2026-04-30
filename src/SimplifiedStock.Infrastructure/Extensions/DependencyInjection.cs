@@ -11,7 +11,10 @@ public static class DependencyInjection
     {
         services.AddDbContext<StockDatabaseContext>(options =>
         {
-            options.UseSqlite(configuration.GetConnectionString("Default"),
+            //options.UseSqlite(configuration.GetConnectionString("Default"),
+            //    x => x.MigrationsAssembly("SimplifiedStock.Infrastructure"));
+
+            options.UseNpgsql(configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("SimplifiedStock.Infrastructure"));
         });
         return services;

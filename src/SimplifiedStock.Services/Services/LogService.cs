@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplifiedStock.Infrastructure.Contexts;
 using SimplifiedStock.Services.DTO.AuditLog;
+using SimplifiedStock.Services.Mappings;
 using SimplifiedStock.Services.ServiceContracts;
 
 namespace SimplifiedStock.Services.Services;
@@ -18,7 +19,7 @@ public class LogService : ILogService
             .Select(l => new StockLogDto()
             {
                 StockName = l.StockName,
-                Type = l.Type,
+                Type = l.Type.ToDto(),
                 WalletId = l.WalletId,
             })
             .ToListAsync(ct);

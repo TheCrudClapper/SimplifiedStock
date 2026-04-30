@@ -1,6 +1,7 @@
 using SimplifiedStock.API.Middleware;
 using SimplifiedStock.Infrastructure.Extensions;
 using SimplifiedStock.Services.Extensions;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 

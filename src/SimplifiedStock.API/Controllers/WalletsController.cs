@@ -29,7 +29,7 @@ public class WalletsController : ControllerBase
     }
 
     [HttpPost("{wallet_id:guid}/stocks/{stock_name}")]
-    public async Task<ActionResult> ExecuteStockTransaction(Guid wallet_id, string stock_name, [FromBody] TransactionRequest request)
+    public async Task<ActionResult> PostStockWallet(Guid wallet_id, string stock_name, [FromBody] TransactionRequest request)
     {
         await _transactionService.BuyOrSellStock(wallet_id, stock_name, request);
         return Ok();
