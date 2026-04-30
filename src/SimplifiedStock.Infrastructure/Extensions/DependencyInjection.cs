@@ -15,5 +15,5 @@ public static class DependencyInjection
                 x => x.MigrationsAssembly("SimplifiedStock.Infrastructure"));
         });
         return services;
-    }  
+    }
 }

@@ -1,3 +1,4 @@
+using SimplifiedStock.API.Middleware;
 using SimplifiedStock.Infrastructure.Extensions;
 using SimplifiedStock.Services.Extensions;
 
@@ -14,6 +15,9 @@ builder.Services.AddServiceLayer(builder.Configuration);
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 
 var app = builder.Build();
+
+//Global exception middleware
+app.UseGlobalExceptionHandlingMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

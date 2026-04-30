@@ -9,5 +9,5 @@ public record WalletResponse
     public Guid Id { get; init; }
 
     [JsonPropertyName("stocks")]
-    public StockResponse Stocks { get; init; } = null!;
+    public IReadOnlyCollection<StockDto> Stocks { get; set; } = [];
 }

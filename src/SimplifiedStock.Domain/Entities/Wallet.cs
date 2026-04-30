@@ -1,4 +1,5 @@
 ﻿namespace SimplifiedStock.Domain.Entities;
+
 public class Wallet
 {
     public Guid Id { get; set; }

@@ -15,7 +15,7 @@ public class StocksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostStocks(BankStockAddRequest request)
+    public async Task<ActionResult> PostStocks([FromBody] BankStockAddRequest request)
     {
         await _stockService.AddBankStocksAsync(request);
         return Ok();

@@ -7,8 +7,9 @@ namespace SimplifiedStock.API.Controllers;
 public class ChaosController : ControllerBase
 {
     [HttpPost]
-    public void KillInstance()
+    public IActionResult KillInstance()
     {
         Environment.Exit(0);
+        return Ok();
     }
 }

@@ -1,3 +1,15 @@
-﻿namespace SimplifiedStock.Services.DTO.Stock;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-public record StockDto(string name, int quantity);
+namespace SimplifiedStock.Services.DTO.Stock;
+
+public record StockDto()
+{
+    [JsonPropertyName("name")]
+    [Required]
+    public string Name { get; init; } = null!;
+
+    [JsonPropertyName("quantity")]
+    [Required]
+    public int Quantity { get; init; }
+};

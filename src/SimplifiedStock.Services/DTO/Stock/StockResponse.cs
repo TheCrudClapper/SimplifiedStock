@@ -1,3 +1,9 @@
-﻿namespace SimplifiedStock.Services.DTO.Stock;
+﻿using System.Text.Json.Serialization;
 
-public record StockResponse(IReadOnlyCollection<StockDto> stocks);
+namespace SimplifiedStock.Services.DTO.Stock;
+
+public record StockResponse() 
+{
+    [JsonPropertyName("stocks")]
+    public IReadOnlyCollection<StockDto> Stocks { get; set; } = [];
+};
