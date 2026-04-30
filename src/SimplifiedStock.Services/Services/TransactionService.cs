@@ -2,8 +2,10 @@
 using SimplifiedStock.Domain.Entities;
 using SimplifiedStock.Domain.Entities.Enums;
 using SimplifiedStock.Infrastructure.Contexts;
+using SimplifiedStock.Services.DTO.Enums;
 using SimplifiedStock.Services.DTO.Transcation;
 using SimplifiedStock.Services.Exceptions;
+using SimplifiedStock.Services.Mappings;
 using SimplifiedStock.Services.ServiceContracts;
 
 namespace SimplifiedStock.Services.Services;
@@ -20,6 +22,8 @@ public class TransactionService : ITransactionService
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
         var normalizedStockName = stockName.Trim().ToUpperInvariant();
+        var domainOperationType = request.Type.ToDomain();
+
         try
         {
             BankStock? stock = await _context.BankStocks
@@ -32,7 +36,7 @@ public class TransactionService : ITransactionService
             WalletStock? walletStock = await _context.WalletStocks
                    .FirstOrDefaultAsync(ws => ws.WalletId == walletId && ws.Name == normalizedStockName);
 
-            if (request.Type == OperationType.Sell)
+            if (domainOperationType == OperationType.Sell)
             {
                 if (wallet is null)
                     throw new BusinessException("Wallet not found");
@@ -50,7 +54,7 @@ public class TransactionService : ITransactionService
 
                 stock.Quantity += 1;
             }
-            else if(request.Type == OperationType.Buy)
+            else if(domainOperationType == OperationType.Buy)
             {
                 if (stock.Quantity < 1)
                     throw new BusinessException("Insufficient stock in bank");
@@ -85,7 +89,7 @@ public class TransactionService : ITransactionService
             AuditLog auditLog = new AuditLog()
             {
                 StockName = normalizedStockName,
-                Type = request.Type,
+                Type = domainOperationType,
                 WalletId = walletId,
                 CreatedAt = DateTime.UtcNow,
             };

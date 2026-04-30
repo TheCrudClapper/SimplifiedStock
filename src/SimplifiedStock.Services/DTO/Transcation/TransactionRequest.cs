@@ -1,4 +1,4 @@
-﻿using SimplifiedStock.Domain.Entities.Enums;
+﻿using SimplifiedStock.Services.DTO.Enums;
 using System.Text.Json.Serialization;
 
 namespace SimplifiedStock.Services.DTO.Transcation;
@@ -6,5 +6,5 @@ namespace SimplifiedStock.Services.DTO.Transcation;
 public record TransactionRequest
 {
     [JsonPropertyName("type")]
-    public OperationType Type { get; init; }
+    public OperationTypeDto Type { get; init; }
 }
