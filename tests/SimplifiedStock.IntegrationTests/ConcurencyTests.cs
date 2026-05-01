@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 
 namespace SimplifiedStock.IntegrationTests;
 
+[Collection("Integration")]
 public class ConcurencyTests : IntegrationTestBase
 {
     public ConcurencyTests(CustomWebApplicationFactory factory) : base(factory) { }

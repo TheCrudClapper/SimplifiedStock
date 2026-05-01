@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 
 namespace SimplifiedStock.IntegrationTests;
 
+[Collection("Integration")]
 public class TransactionFlowTests : IntegrationTestBase
 {
     public TransactionFlowTests(CustomWebApplicationFactory factory) : base(factory) { }

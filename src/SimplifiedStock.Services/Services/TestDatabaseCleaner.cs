@@ -1,4 +1,5 @@
-﻿using SimplifiedStock.Infrastructure.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplifiedStock.Infrastructure.Contexts;
 using SimplifiedStock.Services.ServiceContracts;
 
 public class TestDatabaseCleaner : ITestDatabaseCleaner
@@ -12,10 +13,9 @@ public class TestDatabaseCleaner : ITestDatabaseCleaner
 
     public async Task ResetAsync()
     {
-        _context.AuditLogs.RemoveRange(_context.AuditLogs);
-        _context.WalletStocks.RemoveRange(_context.WalletStocks);
-        _context.Wallets.RemoveRange(_context.Wallets);
-        _context.BankStocks.RemoveRange(_context.BankStocks);
-        await _context.SaveChangesAsync();
+        await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE \"AuditLogs\" CASCADE");
+        await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE \"WalletStocks\" CASCADE");
+        await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE \"Wallets\" CASCADE");
+        await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE \"BankStocks\" CASCADE");
     }
 }
