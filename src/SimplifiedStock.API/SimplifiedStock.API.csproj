@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,6 +7,7 @@
     <UserSecretsId>0fff77e3-d4f3-4ab7-bc95-d6c6f7db883f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+	<!--<PreserveCompilationContext>true</PreserveCompilationContext>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,4 +25,7 @@
     <ProjectReference Include="..\SimplifiedStock.Services\SimplifiedStock.Services.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="SimplifiedStock.IntegrationTests"/>
+	</ItemGroup>
 </Project>

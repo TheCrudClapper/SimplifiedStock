@@ -5,4 +5,7 @@
     <Project Path="src/SimplifiedStock.Infrastructure/SimplifiedStock.Infrastructure.csproj" Id="5a9b3a7e-cdc4-4dff-85f6-5989886c7a5d" />
     <Project Path="src/SimplifiedStock.Services/SimplifiedStock.Services.csproj" Id="9b69ad49-6db5-45aa-823b-45036d6b3c1b" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SimplifiedStock.IntegrationTests/SimplifiedStock.IntegrationTests.csproj" Id="70a0e566-e39a-4b96-a65f-dd12731aaed3" />
+  </Folder>
 </Solution>
