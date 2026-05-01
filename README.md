@@ -21,16 +21,17 @@ src
 └── SimplifiedStock.Infrastructure - Data access & migrations
 ```
 
-## Getting Started
+## Quickstart
 
 ### Prerequisites
-
+To run this application on your machine you will need:
 - Docker
 - Docker Compose
 - Git
 
 ### Installation & Startup
-
+After cloning the repo `git clone https://github.com/TheCrudClapper/SimplifiedStock.git` you need to enter following folder `SimplifiedStock`. 
+To start project you can use command corresponding your operating system.
 #### Windows (PowerShell)
 
 If no argument provided, default port is 8080
@@ -122,21 +123,19 @@ curl -X POST http://localhost:8080/wallets/550e8400-e29b-41d4-a716-446655440000/
 curl http://localhost:8080/log
 ```
 
-### Running Tests Locally
-The project includes integration tests with concurency validation
+## Tests
+
+The project includes **integration tests** with concurrency validation.
+- ASP.NET Core environment set to Testing
+- Production DbContext is replaced
+- Tests use a dedicated PostgreSQL database (TestStockDB)
+- Ensures isolation from development and production data
+- Integration tests are executed sequentially
+- Each test starts with database cleanup to ensure isolation
+### Running Tests
 
 ```bash
 dotnet test
-```
-
-### Database Migrations
-
-Migrations run automatically on startup. To create a new migration:
-
-```bash
-dotnet ef migrations add <MigrationName> \
-  -p src/SimplifiedStock.Infrastructure \
-  -s src/SimplifiedStock.API
 ```
 
 ## Configuration
