@@ -122,15 +122,8 @@ curl -X POST http://localhost:8080/wallets/550e8400-e29b-41d4-a716-446655440000/
 curl http://localhost:8080/log
 ```
 
-## Development
-
-### Building Locally
-
-```bash
-dotnet build
-```
-
-### Running Tests
+### Running Tests Locally
+The project includes integration tests with concurency validation
 
 ```bash
 dotnet test
