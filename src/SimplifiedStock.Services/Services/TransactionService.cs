@@ -2,7 +2,6 @@
 using SimplifiedStock.Domain.Entities;
 using SimplifiedStock.Domain.Entities.Enums;
 using SimplifiedStock.Infrastructure.Contexts;
-using SimplifiedStock.Services.DTO.Enums;
 using SimplifiedStock.Services.DTO.Transcation;
 using SimplifiedStock.Services.Exceptions;
 using SimplifiedStock.Services.Mappings;
@@ -21,14 +20,17 @@ public class TransactionService : ITransactionService
     public async Task BuyOrSellStock(Guid walletId, string stockName, TransactionRequest request)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
+
         var normalizedStockName = stockName.Trim().ToUpperInvariant();
         var domainOperationType = request.Type.ToDomain();
 
         try
         {
+            //Locks stock from concurent updates
             BankStock? stock = await _context.BankStocks
-                    .FirstOrDefaultAsync(bs => bs.Name == normalizedStockName)
-                    ?? throw new NotFoundException("Stock not found");
+                .FromSqlRaw("SELECT * FROM \"BankStocks\" WHERE \"Name\" = {0} FOR UPDATE", normalizedStockName)
+                .FirstOrDefaultAsync()
+                ?? throw new NotFoundException("Stock not found");
 
             Wallet? wallet = await _context.Wallets
                    .FirstOrDefaultAsync(w => w.Id == walletId);
