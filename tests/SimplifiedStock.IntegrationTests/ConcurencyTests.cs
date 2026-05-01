@@ -13,6 +13,7 @@ public class ConcurencyTests : IntegrationTestBase
     public async Task Concurrent_Buys_Should_Not_Corrupt_Stock()
     {
         //Arrange
+        await ResetDb();
         await SeedStock();
 
         var walletId = Guid.NewGuid();

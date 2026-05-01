@@ -14,6 +14,7 @@ public class TransactionFlowTests : IntegrationTestBase
     public async Task Buy_Should_Create_Wallet_Decrease_Bank_And_Add_Stock_To_Wallet()
     {
         //Arrange
+        await ResetDb();
         await SeedStock();
 
         var walletId = Guid.NewGuid();
@@ -37,6 +38,7 @@ public class TransactionFlowTests : IntegrationTestBase
     public async Task Sell_Should_Decrease_Wallet_Stock_And_Add_To_Bank()
     {
         //Arrange
+        await ResetDb();
         await SeedStock();
 
         var walletId = Guid.NewGuid();

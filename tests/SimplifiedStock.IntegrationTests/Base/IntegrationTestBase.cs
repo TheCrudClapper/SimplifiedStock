@@ -11,6 +11,11 @@ public class IntegrationTestBase
         Client = factory.CreateClient();
     }
 
+    public async Task ResetDb()
+    {
+        await Client.PostAsync("/test/reset", null);
+    }
+
     protected async Task SeedStock()
     {
         await Client.PostAsJsonAsync("/stocks", new
