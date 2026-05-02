@@ -24,6 +24,6 @@ public class LogService : ILogService
             })
             .ToListAsync(ct);
 
-        return new LogResponse(logs);
+        return new LogResponse { Log = logs };
     }
 }

@@ -16,13 +16,13 @@ public class IntegrationTestBase
         await Client.PostAsync("/test/reset", null);
     }
 
-    protected async Task SeedStock()
+    protected async Task SeedStock(int quantity = 100)
     {
         await Client.PostAsJsonAsync("/stocks", new
         {
             stocks = new[]
             {
-                new { name = "AAPL", quantity = 100 }
+                new { name = "AAPL", quantity }
             }
         });
     }

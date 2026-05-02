@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using SimplifiedStock.IntegrationTests.Base;
+using SimplifiedStock.Services.DTO.Stock;
 using SimplifiedStock.Services.DTO.Wallet;
 using System.Net;
 using System.Net.Http.Json;
@@ -25,14 +26,17 @@ public class TransactionFlowTests : IntegrationTestBase
             $"/wallets/{walletId}/stocks/AAPL",
             new { type = "buy" });
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-
         WalletResponse? wallet = await Client.GetFromJsonAsync<WalletResponse>(
             $"/wallets/{walletId}");
 
+        var bank = await Client.GetFromJsonAsync<StockResponse>($"/stocks");
+
         //Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         wallet.Should().NotBeNull();
+        bank.Should().NotBeNull();
         wallet.Stocks.Should().ContainSingle(x => x.Name == "AAPL");
+        bank.Stocks.First(x => x.Name == "AAPL").Quantity.Should().Be(99);
     }
 
     [Fact]
@@ -61,13 +65,119 @@ public class TransactionFlowTests : IntegrationTestBase
             $"/wallets/{walletId}/stocks/AAPL",
             new { type = "sell" });
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-
         WalletResponse? wallet = await Client.GetFromJsonAsync<WalletResponse>(
            $"/wallets/{walletId}");
 
+        var bank = await Client.GetFromJsonAsync<StockResponse>($"/stocks");
+
         //Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         wallet.Should().NotBeNull();
+        bank.Should().NotBeNull();
+        wallet.Stocks.Should().ContainSingle(x => x.Name == "AAPL" && x.Quantity == 1);
+        bank.Stocks.First(x => x.Name == "AAPL").Quantity.Should().Be(99);
+    }
+
+    [Fact]
+    public async Task Buy_Should_Return_NotFound_When_Stock_Does_Not_Exist()
+    {
+        //Arrange
+        await ResetDb();
+
+        Guid walletId = Guid.NewGuid();
+
+        //Act
+        var response = await Client.PostAsJsonAsync(
+            $"/wallets/{walletId}/stocks/AAPL",
+            new { type = "buy" });
+
+        //Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task Buy_Should_Return_BadRequest_When_Stock_Quantity_Is_Zero()
+    {
+        // Arrange
+        await ResetDb();
+        await SeedStock(quantity: 0);
+
+        var walletId = Guid.NewGuid();
+
+        // Act
+        var response = await Client.PostAsJsonAsync(
+            $"/wallets/{walletId}/stocks/AAPL",
+            new { type = "buy" });
+
+        var bank = await Client.GetFromJsonAsync<StockResponse>("/stocks");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        bank!.Stocks.First(x => x.Name == "AAPL").Quantity.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Sell_Should_Return_BadRequest_When_Wallet_Does_Not_Have_Stock()
+    {
+        // Arrange
+        await ResetDb();
+        await SeedStock();
+
+        var walletId = Guid.NewGuid();
+
+        // Act
+        var response = await Client.PostAsJsonAsync(
+            $"/wallets/{walletId}/stocks/AAPL",
+            new { type = "sell" });
+
+        var bank = await Client.GetFromJsonAsync<StockResponse>("/stocks");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        //bank quantity shouldnt change
+        bank!.Stocks.First(x => x.Name == "AAPL").Quantity.Should().Be(100);
+    }
+
+    [Fact]
+    public async Task Operation_Should_Return_OK_When_Successful()
+    {
+        // Arrange
+        await ResetDb();
+        await SeedStock();
+
+        var walletId = Guid.NewGuid();
+
+        // Act
+        var response = await Client.PostAsJsonAsync(
+            $"/wallets/{walletId}/stocks/AAPL",
+            new { type = "buy" });
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task Buy_Should_Create_Wallet_When_Not_Exists()
+    {
+        // Arrange
+        await ResetDb();
+        await SeedStock();
+
+        var walletId = Guid.NewGuid();
+
+        // Act
+        var response = await Client.PostAsJsonAsync(
+            $"/wallets/{walletId}/stocks/AAPL",
+            new { type = "buy" });
+
+        WalletResponse? wallet = await Client.GetFromJsonAsync<WalletResponse>(
+            $"/wallets/{walletId}");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        wallet.Should().NotBeNull();
+        wallet.Id.Should().Be(walletId);
         wallet.Stocks.Should().ContainSingle(x => x.Name == "AAPL" && x.Quantity == 1);
     }
 }
